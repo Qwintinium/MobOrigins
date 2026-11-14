@@ -26,17 +26,6 @@ public abstract class LivingEntityMixin extends Entity {
         super(entityType, world);
     }
 
-    @Inject(method = "tryUseTotem", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;decrement(I)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    public void tryUseTotem$MobOrigins(DamageSource source, CallbackInfoReturnable<Boolean> cir, ItemStack itemStack, ItemStack itemStack2, Hand[] var4, int var5, int var6, Hand hand) {
-        List<TotemChancePower> totemChancePowers = PowerHolderComponent.getPowers((LivingEntity) (Object) this, TotemChancePower.class);
-        if (totemChancePowers.size() > 0) {
-            float chance = totemChancePowers.stream().map(TotemChancePower::getBreakChance).reduce(Float::sum).get();
-            if (((LivingEntity) (Object) this).getRandom().nextFloat() < chance) {
-                itemStack2.increment(1);
-            }
-        }
-    }
-
     @Inject(method = "getAttackDistanceScalingFactor", at = @At("TAIL"),locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
     void changeAttackDistanceScalingFactor$MobOrigins(Entity entity, CallbackInfoReturnable<Double> cir, double d) {
         float newValue = PowerHolderComponent.modify(((LivingEntity) (Object) this), ModifyAttackDistanceScalingFactorPower.class, (float)d, p -> p.doesApply(entity));

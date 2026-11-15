@@ -1,7 +1,7 @@
 plugins {
     id("fabric-loom") version "0.11.+"
     id("maven-publish")
-    id("io.github.juuxel.loom-quiltflower") version "1.11.0"
+    id("io.github.juuxel.loom-vineflower") version "1.11.0"
     id("io.github.p03w.machete") version "2.0.0"
 }
 
